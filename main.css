@@ -1,0 +1,15 @@
+.container{
+  margin: 40px auto;
+}
+
+li{
+  clear: both;
+  margin: 15px;
+  position: relative;
+}
+li .edit{
+  display:none;
+}
+li.editing .edit{
+  display:block;
+}
