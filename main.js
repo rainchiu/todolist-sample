@@ -2,15 +2,29 @@ var App = {};
 //init todo list data structure
 App.init = function(){
   this.data = [];
+  /* 使用delegate，使bind event變得較容易，不須考慮在哪一層*/
+  $('.container').delegate('#addbtn','click',function(){
+      App.add($(event.target).prev().val());
+      $(event.target).prev().val("");
+  });
+
+  $('.container').delegate('.editbtn','click',function(event){
+    $(event.target).parent().parent().addClass('editing');
+  });
+
+  $('.container').delegate('.okbtn','click',function(event){
+    App.update($(event.target).val(), $(event.target).prev().val());
+  });
+
+  $('.container').delegate('.removebtn','click',function(event){
+    App.remove($(event.target).val());
+  });
 };
-
-
 //Add function to add list
 App.add = function(str){
   this.data.push(str);
   App.render();
 };
-
 //remove
 App.remove = function(index){
   this.data.splice(index, 1);
@@ -31,40 +45,19 @@ App.render = function(){
    '<div class="edit"><input value='+data[i]+'><button class="okbtn" value="'+i+'">ok</button></div>' +
    '<div class="display"><span>'+data[i]+'</span><button class="editbtn" value="'+i+'">edit</button><button class="removebtn" value="'+i+'">remove</button></div>' +
    '</li>';
-  }
-  
-  // $('li').append(data.length-1);
+  }  
   $('ul').html(html);
-
-  $('.editbtn').on("click",function(event){
-    // console.log($(event.target).val());
-    var status=$(event.target);
-    var statuspre=$(event.target).prev();
-    // console.log(statuspre.text());
-    status.parent().parent().addClass('editing');
-    status.css('display','none');
-    status.next().css('display','none');
-
-    $('.okbtn').on("click", function(event){
-      // console.log($(event.target).prev().val());
-      // console.log($('.editbtn').text());
-      App.update(status.val(), $(event.target).prev().val());
-      // console.log(data[i]);
-    });
-  });
-  $('.removebtn').on("click",function(event){
-    var status=$(event.target);
-    var statuspre=$(event.target).prev();
-    App.remove(status.val());
-  });
+/* bind event */
+  // $('.editbtn').on("click",function(event){
+  //   $(event.target).parent().parent().addClass('editing');
+  //   $('.okbtn').on("click", function(event){
+  //     App.update($(event.target).val(), $(event.target).prev().val());
+  //   });
+  // });
+  // $('.removebtn').on("click",function(event){
+  //   App.remove($(event.target).val());
+  // });
 };
-
-$('#addbtn').on("click",function(){
-    var status=$(event.target);
-    var statuspre=$(event.target).prev();
-    App.add(statuspre.val());
-});
-
 
 App.init();
 
