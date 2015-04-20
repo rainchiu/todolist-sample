@@ -2,6 +2,20 @@ var App = {};
 //init todo list data structure
 App.init = function(){
   this.data = [];
+  arraytmp = [];
+
+  /* 判斷localStorage初始值不是空的情況下*/
+  if(localStorage.getItem("data")!= null){
+    arraytmp = localStorage.data.split(',');
+    // console.log(arraytmp);
+    this.data = arraytmp;
+  }
+  /* 處理 this.data 最後一個值為空的情況時(最後一個字為逗號) */
+  if(this.data[this.data.length-1] == ""){
+    App.remove(this.data.length-1);
+  }
+  App.render();
+
   /* 使用delegate，使bind event變得較容易，不須考慮在哪一層*/
   $('.container').delegate('#addbtn','click',function(){
       App.add($(event.target).prev().val());
@@ -24,16 +38,19 @@ App.init = function(){
 App.add = function(str){
   this.data.push(str);
   App.render();
+  App.judge();
 };
 //remove
 App.remove = function(index){
   this.data.splice(index, 1);
   App.render();
+  App.judge();
 };
 //update
 App.update = function(index, value){
   this.data.splice(index, 1, value);
   App.render();
+  App.judge();
 };
 //render
 App.render = function(){
@@ -57,6 +74,10 @@ App.render = function(){
   // $('.removebtn').on("click",function(event){
   //   App.remove($(event.target).val());
   // });
+};
+//將data新增、修改、刪除的值記錄於localStorage
+App.judge = function(){
+  localStorage.data = this.data+',';
 };
 
 App.init();
