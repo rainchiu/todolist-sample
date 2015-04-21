@@ -5,7 +5,7 @@ App.init = function(){
   // arraytmp = [];
 
   /* 判斷localStorage初始值不是空的情況下*/
-  if(localStorage.getItem("data")!= null){
+  if(localStorage.data!= null){
     // arraytmp = localStorage.data.split(',');
     // this.data = arraytmp;
     this.data = JSON.parse(localStorage.data);
