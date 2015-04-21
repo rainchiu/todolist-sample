@@ -58,10 +58,17 @@ App.render = function(){
   html = "";
   for(var i=data.length-1; i>=0; i--){
     //add html string here
-     html += '<li>'+
-   '<div class="edit"><input value='+data[i]+'><button class="okbtn" value="'+i+'">ok</button></div>' +
-   '<div class="display"><span>'+data[i]+'</span><button class="editbtn" value="'+i+'">edit</button><button class="removebtn" value="'+i+'">remove</button></div>' +
-   '</li>';
+    if (i == data.length-1) {
+      html += '<li>'+
+     '<div class="edit"><input value='+data[i]+'><button class="btn btn-default btn-sm okbtn" value="'+i+'">ok</button></div>' +
+     '<div class="display"><span class="fontsize">'+data[i]+'</span>&nbsp;&nbsp;<button class="btn btn-info btn-sm editbtn" value="'+i+'">edit</button>&nbsp;<button class="btn btn-primary btn-sm removebtn" value="'+i+'">remove</button>&nbsp;&nbsp;<span class="label label-danger">New</span></div><br/>' +
+     '</li>';
+    }else{
+       html += '<li>'+
+     '<div class="edit"><input value='+data[i]+'><button class="btn btn-default btn-sm okbtn" value="'+i+'">ok</button></div>' +
+     '<div class="display"><span>'+data[i]+'</span>&nbsp;&nbsp;<button class="btn btn-info btn-sm editbtn" value="'+i+'">edit</button>&nbsp;<button class="btn btn-primary btn-sm removebtn" value="'+i+'">remove</button></div><br/>' +
+     '</li>';
+    } 
   }  
   $('ul').html(html);
 /* bind event */
