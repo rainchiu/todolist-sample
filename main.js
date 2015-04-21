@@ -56,7 +56,7 @@ App.update = function(index, value){
 App.render = function(){
   data = this.data;
   html = "";
-  for(var i=0; i<data.length; i++){
+  for(var i=data.length-1; i>=0; i--){
     //add html string here
      html += '<li>'+
    '<div class="edit"><input value='+data[i]+'><button class="okbtn" value="'+i+'">ok</button></div>' +
