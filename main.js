@@ -2,18 +2,18 @@ var App = {};
 //init todo list data structure
 App.init = function(){
   this.data = [];
-  arraytmp = [];
+  // arraytmp = [];
 
   /* 判斷localStorage初始值不是空的情況下*/
   if(localStorage.getItem("data")!= null){
-    arraytmp = localStorage.data.split(',');
-    // console.log(arraytmp);
-    this.data = arraytmp;
+    // arraytmp = localStorage.data.split(',');
+    // this.data = arraytmp;
+    this.data = JSON.parse(localStorage.data);
   }
   /* 處理 this.data 最後一個值為空的情況時(最後一個字為逗號) */
-  if(this.data[this.data.length-1] == ""){
-    App.remove(this.data.length-1);
-  }
+  // if(this.data[this.data.length-1] == ""){
+  //   App.remove(this.data.length-1);
+  // }
   App.render();
 
   /* 使用delegate，使bind event變得較容易，不須考慮在哪一層*/
@@ -77,7 +77,8 @@ App.render = function(){
 };
 //將data新增、修改、刪除的值記錄於localStorage
 App.judge = function(){
-  localStorage.data = this.data+',';
+  // localStorage.data = this.data+',';
+  localStorage.data = JSON.stringify(this.data);
 };
 
 App.init();
