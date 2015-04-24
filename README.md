@@ -16,8 +16,8 @@
 6. After you press remove button, this list item will disappear. 
 	
 ### Reference
-* [jQuery API](https://jquery.com/)
-* [bootstrap](http://getbootstrap.com/)
+* [jQuery API](https://jquery.com/)-use jquery to dynamic your status.
+* [bootstrap](http://getbootstrap.com/)-use bootstrap to make your view better.
 	
 ### Required
 First, you shold require npm and node.js.
@@ -40,5 +40,5 @@ $ live-server
 Up and running at [localhost:8080](http://127.0.0.1:8080/)
 
 ### Screenshot
-[Example](http://imgur.com/XE42ZUq)
+![](http://imgur.com/XE42ZUq)
 
