@@ -40,5 +40,5 @@ $ live-server
 Up and running at [localhost:8080](http://127.0.0.1:8080/)
 
 ### Screenshot
-![](http://imgur.com/XE42ZUq)
+![](http://i.imgur.com/XE42ZUq.png)
 
