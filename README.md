@@ -7,6 +7,7 @@
  - ToDo-List can record your browser record even if you close your web browser.
  
 ### ToDo-List Steps
+
 	1. Write down your list item at Textbox.
 	2. Press button 'ADD' or 'ENTER' until you finish your list item.
 	3. If you want to modify your list item, press button 'edit'.
@@ -15,15 +16,15 @@
 	6. After you press remove button, this list item will disappear. 
 	
 ### Reference
-	- jQuery library [jQuery API](https://jquery.com/)
-	- bootstrap [bootstrap](http://getbootstrap.com/)
+[jQuery API](https://jquery.com/)
+[bootstrap](http://getbootstrap.com/)
 	
 ### Required
 First, you shold require npm and node.js.
-	* node.js [node.js](https://nodejs.org/)
+* Required [node.js](https://nodejs.org/)
 
 ### Install
-npm live-server can make you run server without reload the page
+npm live-server can make you run server without reload the page.
 ```
 $ npm install -g live-server
 ```
@@ -39,5 +40,5 @@ $ live-server
 Up and running at [localhost:8080](http://127.0.0.1:8080/)
 
 ### Screenshot
-	[Example](http://imgur.com/XE42ZUq)
+[Example](http://imgur.com/XE42ZUq)
 
