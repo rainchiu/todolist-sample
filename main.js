@@ -15,9 +15,16 @@ App.init = function(){
   //   App.remove(this.data.length-1);
   // }
   App.render();
-
+  /* 判斷是否使用 ENTER鍵 作為ADD*/
+  $('.mytxt').keypress(function(event){
+    var keycode = (event.keyCode ? event.keyCode : event.which);
+    if(keycode == '13'){
+      App.add($(event.target).val());
+      $(event.target).val("");
+    }
+  });
   /* 使用delegate，使bind event變得較容易，不須考慮在哪一層*/
-  $('.container').delegate('#addbtn','click',function(){
+  $('.container').delegate('#addbtn','click',function(event){
       App.add($(event.target).prev().val());
       $(event.target).prev().val("");
   });
@@ -27,11 +34,11 @@ App.init = function(){
   });
 
   $('.container').delegate('.okbtn','click',function(event){
-    App.update($(event.target).val(), $(event.target).prev().val());
+    App.update($('.okbtn').index(this), $(event.target).prev().val());
   });
 
   $('.container').delegate('.removebtn','click',function(event){
-    App.remove($(event.target).val());
+    App.remove($('.removebtn').index(this));
   });
 };
 //Add function to add list
@@ -42,13 +49,14 @@ App.add = function(str){
 };
 //remove
 App.remove = function(index){
-  this.data.splice(index, 1);
+  this.data.splice(data.length-1-index, 1);
   App.render();
   App.judge();
 };
 //update
 App.update = function(index, value){
-  this.data.splice(index, 1, value);
+  /* data.length-1-index 因為App.render會相反輸出*/
+  this.data.splice(data.length-1-index, 1, value);
   App.render();
   App.judge();
 };
@@ -56,19 +64,14 @@ App.update = function(index, value){
 App.render = function(){
   data = this.data;
   html = "";
+  var newtxt = '<span class="label label-danger pull-left">New</span>';
   for(var i=data.length-1; i>=0; i--){
     //add html string here
-    if (i == data.length-1) {
-      html += '<li>'+
-     '<div class="edit"><input value='+data[i]+'><button class="btn btn-default btn-sm okbtn" value="'+i+'">ok</button></div>' +
-     '<div class="display"><span class="fontsize">'+data[i]+'</span>&nbsp;&nbsp;<button class="btn btn-info btn-sm editbtn" value="'+i+'">edit</button>&nbsp;<button class="btn btn-primary btn-sm removebtn" value="'+i+'">remove</button>&nbsp;&nbsp;<span class="label label-danger">New</span></div><br/>' +
-     '</li>';
-    }else{
-       html += '<li>'+
-     '<div class="edit"><input value='+data[i]+'><button class="btn btn-default btn-sm okbtn" value="'+i+'">ok</button></div>' +
-     '<div class="display"><span>'+data[i]+'</span>&nbsp;&nbsp;<button class="btn btn-info btn-sm editbtn" value="'+i+'">edit</button>&nbsp;<button class="btn btn-primary btn-sm removebtn" value="'+i+'">remove</button></div><br/>' +
-     '</li>';
-    } 
+    html += '<li>'+
+    '<div class="edit"><input value='+data[i]+' class="mytxt"><button class="btn btn-default pull-right btn-sm okbtn">ok</button></div>' +
+    '<div class="display"><span class="input-group-addon fontsize">'+data[i]+'</span>'+ newtxt +'<button class="btn btn-primary pull-right btn-sm removebtn">remove</button><button class="btn btn-info pull-right btn-sm editbtn">edit</button></div><br/>' +
+    '</li>';
+    newtxt = "";
   }  
   $('ul').html(html);
 /* bind event */
