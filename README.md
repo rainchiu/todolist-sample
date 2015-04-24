@@ -2,22 +2,22 @@
  Build a simple todo-list using jquery,html and css.
 	
 ### ToDo-List Overviews
- - This is an app to manage your own list.
- - It contains add(),edit(),remove() functions.
- - ToDo-List can record your browser record even if you close your web browser.
+- This is an app to manage your own list.
+- It contains add(),edit(),remove() functions.
+- ToDo-List can record your browser record even if you close your web browser.
  
 ### ToDo-List Steps
 
-	1. Write down your list item at Textbox.
-	2. Press button 'ADD' or 'ENTER' until you finish your list item.
-	3. If you want to modify your list item, press button 'edit'.
-	4. When you already modify your list item, just press button 'ok' to change your new list item.
-	5. If you want to remove your list item, press button 'remove'.
-	6. After you press remove button, this list item will disappear. 
+1. Write down your list item at Textbox.
+2. Press button 'ADD' or 'ENTER' until you finish your list item.
+3. If you want to modify your list item, press button 'edit'.
+4. When you already modify your list item, just press button 'ok' to change your new list item.
+5. If you want to remove your list item, press button 'remove'.
+6. After you press remove button, this list item will disappear. 
 	
 ### Reference
-[jQuery API](https://jquery.com/)
-[bootstrap](http://getbootstrap.com/)
+* [jQuery API](https://jquery.com/)
+* [bootstrap](http://getbootstrap.com/)
 	
 ### Required
 First, you shold require npm and node.js.
