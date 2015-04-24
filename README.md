@@ -1,10 +1,10 @@
 # An example to create a todo-list app
-	* Build a simple todo-list using jquery,html and css.
+ Build a simple todo-list using jquery,html and css.
 	
 # ToDo-List Overviews
-	* This is an app to manage your own list.
-	* It contains add(),edit(),remove() functions.
-	* ToDo-List can record your browser record even if you close your web browser.
+ This is an app to manage your own list.
+ It contains add(),edit(),remove() functions.
+ ToDo-List can record your browser record even if you close your web browser.
 	
 ## Reference
 	1. jQuery library [jQuery API](https://jquery.com/)
@@ -34,5 +34,5 @@ live-server
 Up and running at [localhost:8080](http://127.0.0.1:8080/)
 
 ## Screenshot
-	[Example](http://imgur.com/XE42ZUq)
+	![Example](http://imgur.com/XE42ZUq)
 
