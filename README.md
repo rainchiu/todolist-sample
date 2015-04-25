@@ -16,11 +16,11 @@
 6. After you press remove button, this list item will disappear. 
 	
 ### Reference
-* [jQuery API](https://jquery.com/)-use jquery to dynamic your status.
+* [jQuery API](https://jquery.com/)-use jquery to change your status dynamic.
 * [bootstrap](http://getbootstrap.com/)-use bootstrap to make your view better.
 	
 ### Required
-First, you shold require npm and node.js.
+First, you should install npm and node.js.
 * Required [node.js](https://nodejs.org/)
 
 ### Install
