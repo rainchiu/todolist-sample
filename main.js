@@ -15,11 +15,12 @@ App.init = function(){
   //   App.remove(this.data.length-1);
   // }
   App.render();
+
   /* 判斷是否使用 ENTER鍵 作為ADD*/
   $('.mytxt').keypress(function(event){
     var keycode = (event.keyCode ? event.keyCode : event.which);
     if(keycode == '13'){
-      App.add($(event.target).val());
+      App.add(encodeURIComponent($(event.target).val()));
       $(event.target).val("");
     }
   });
@@ -68,12 +69,13 @@ App.render = function(){
   for(var i=data.length-1; i>=0; i--){
     //add html string here
     html += '<li>'+
-    '<div class="edit"><input value='+data[i]+' class="mytxt"><button class="btn btn-default pull-right btn-sm okbtn">ok</button></div>' +
-    '<div class="display"><span class="input-group-addon fontsize">'+data[i]+'</span>'+ newtxt +'<button class="btn btn-primary pull-right btn-sm removebtn">remove</button><button class="btn btn-info pull-right btn-sm editbtn">edit</button></div><br/>' +
+    '<div class="edit"><input value='+$('#todo-list').text(decodeURIComponent(data[i])).html()+' class="mytxt"><button class="btn btn-default pull-right btn-sm okbtn">ok</button></div>' +
+    '<div class="display"><span class="input-group-addon fontsize">'+$('#todo-list').text(decodeURIComponent(data[i])).html()+'</span>'+ newtxt +'<button class="btn btn-primary pull-right btn-sm removebtn">remove</button><button class="btn btn-info pull-right btn-sm editbtn">edit</button></div><br/>' +
     '</li>';
     newtxt = "";
   }  
   $('ul').html(html);
+};
 /* bind event */
   // $('.editbtn').on("click",function(event){
   //   $(event.target).parent().parent().addClass('editing');
@@ -84,7 +86,6 @@ App.render = function(){
   // $('.removebtn').on("click",function(event){
   //   App.remove($(event.target).val());
   // });
-};
 //將data新增、修改、刪除的值記錄於localStorage
 App.judge = function(){
   // localStorage.data = this.data+',';
