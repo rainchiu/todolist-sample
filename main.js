@@ -102,6 +102,7 @@ App.xss = function(){
     data[i] = decodeURIComponent(data[i]);
   }
 }
+
 App.init();
 
 
