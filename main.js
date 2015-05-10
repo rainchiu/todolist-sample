@@ -8,16 +8,19 @@ var App = React.createClass({
   addTodo: function(e) {
     e.preventDefault();
     this.state.data.push(this.state.text);
+    localStorage.data = JSON.stringify(this.state.data);
     this.setState({data: this.state.data, text: ''});
   },
   removeTodo: function(index) {
     this.state.data.splice(index, 1);
+    localStorage.data = JSON.stringify(this.state.data);
     this.setState({data: this.state.data});
   },
   updateTodo: function(index, value) {
     this.state.data.splice(index, 1, value);
+    localStorage.data = JSON.stringify(this.state.data);
     this.setState({data: this.state.data});
-    console.log(this.state.data);
+    // console.log(this.state.data);
   },
   render: function() {
     return (
@@ -35,31 +38,26 @@ var TodoList = React.createClass({
   getInitialState: function() {
     return {
             editdata: this.props.data,
-            isOnEditIdx:null
+            isOnEditIdx:null,
+            onEdit:[]
            };
+    
   },
   onChange: function(index, e) {
     this.state.editdata.splice(index, 1, e.target.value);
     this.setState({editdata: this.state.editdata});
   },
-  // changeMode: function(index, modejudge, value){
-  //   if(modejudge=='1'){
-  //     this.setState({mode: 'editing'});  
-  //   }
-  //   else{
-  //     this.props.onClickOk(index, value);
-  //     this.setState({mode: '', editdata: this.state.editdata}); 
-  //     console.log(this.state.editdata);
-  //   }
-  // },
   okHandler: function(index, value){
     // console.log('index',index);
     this.props.onClickOk(index, value);
-    this.setState({isOnEditIdx: null});
+    this.state.onEdit.splice(this.state.onEdit[index], 1);
+    this.setState({onEdit:this.state.onEdit, isOnEditIdx:null});
+    // console.log(this.state.onEdit);
   },
   editHandler: function(index){
-    // console.log('index',index);
-    this.setState({isOnEditIdx:index});
+    this.state.onEdit.push(index);
+    this.setState({onEdit:this.state.onEdit, isOnEditIdx:index});
+    // console.log(this.state.onEdit);
   },
   deletedata: function(index){
     this.props.onClickClose(index);
@@ -68,7 +66,7 @@ var TodoList = React.createClass({
     var _self = this;
     var createItem = function(itemText, index) {  
       return (
-        <li key={index} className={_self.state.isOnEditIdx == index ? "editing" : ""}>           
+        <li key={index} className={_self.state.onEdit.indexOf(index)>=0 ? "editing" : ""}>           
           <div className="edit">
             <input className="mytxt" onChange={_self.onChange.bind(this, index)} value={_self.state.editdata[index]} />
             <button className="btn btn-default pull-right btn-sm okbtn" onClick={_self.okHandler.bind(this, index, _self.state.editdata[index])}>ok</button>
