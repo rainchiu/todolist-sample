@@ -48,16 +48,21 @@ var TodoList = React.createClass({
     this.setState({editdata: this.state.editdata});
   },
   okHandler: function(index, value){
-    // console.log('index',index);
     this.props.onClickOk(index, value);
     // this.state.onEdit.splice(this.state.onEdit[index], 1);
+    for(i = 0; i< this.state.onEdit.length ; i++){
+      if(this.state.onEdit[i]==index){
+         this.state.onEdit.splice(i, 1);
+         // console.log("name:"+i);
+      } 
+    }
+    console.log(this.state.onEdit);
     this.setState({onEdit:this.state.onEdit, isOnEditIdx:null});
-    // console.log(this.state.onEdit);
   },
   editHandler: function(index){
     this.state.onEdit.push(index);
     this.setState({onEdit:this.state.onEdit, isOnEditIdx:index});
-    // console.log(this.state.onEdit);
+    console.log(this.state.onEdit);
   },
   deletedata: function(index){
     this.props.onClickClose(index);
@@ -66,7 +71,7 @@ var TodoList = React.createClass({
     var _self = this;
     var createItem = function(itemText, index) {  
       return (
-        <li key={index} className={_self.state.isOnEditIdx == index ? "editing" : ""}>           
+        <li key={index} className={_self.state.onEdit.indexOf(index)>=0 ? "editing" : ""}>           
           <div className="edit">
             <input className="mytxt" onChange={_self.onChange.bind(this, index)} value={_self.state.editdata[index]} />
             <button className="btn btn-default pull-right btn-sm okbtn" onClick={_self.okHandler.bind(this, index, _self.state.editdata[index])}>ok</button>
