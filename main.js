@@ -38,34 +38,39 @@ var TodoList = React.createClass({
   getInitialState: function() {
     return {
             editdata: this.props.data,
-            isOnEditIdx:null,
             onEdit:[]
            };
     
   },
-  onChange: function(index, e) {
-    this.state.editdata.splice(index, 1, e.target.value);
+  // componentWillMount: function(){
+  //   console.log("componentWillMount");
+  // },
+  // componentDidMount: function(){
+  //   console.log("componentDidMount");
+  // },
+  onChange: function(e) {
+    this.state.editdata.splice(e.target.getAttribute('data-index'), 1, e.target.value);
     this.setState({editdata: this.state.editdata});
   },
-  okHandler: function(index, value){
-    this.props.onClickOk(index, value);
+  okHandler: function(e){
+    this.props.onClickOk(e.target.getAttribute('data-index'), e.target.value);
     // this.state.onEdit.splice(this.state.onEdit[index], 1);
     for(i = 0; i< this.state.onEdit.length ; i++){
-      if(this.state.onEdit[i]==index){
+      if(this.state.onEdit[i]==e.target.getAttribute('data-index')){
          this.state.onEdit.splice(i, 1);
-         // console.log("name:"+i);
       } 
     }
+    this.setState({onEdit:this.state.onEdit});
     console.log(this.state.onEdit);
-    this.setState({onEdit:this.state.onEdit, isOnEditIdx:null});
   },
   editHandler: function(index){
     this.state.onEdit.push(index);
-    this.setState({onEdit:this.state.onEdit, isOnEditIdx:index});
+    this.setState({onEdit:this.state.onEdit});
     console.log(this.state.onEdit);
   },
-  deletedata: function(index){
-    this.props.onClickClose(index);
+  deletedata: function(e){
+    this.props.onClickClose(e.target.getAttribute('data-index'));
+    console.log(this.state.onEdit);
   },
   render: function() {
     var _self = this;
@@ -73,12 +78,13 @@ var TodoList = React.createClass({
       return (
         <li key={index} className={_self.state.onEdit.indexOf(index)>=0 ? "editing" : ""}>           
           <div className="edit">
-            <input className="mytxt" onChange={_self.onChange.bind(this, index)} value={_self.state.editdata[index]} />
-            <button className="btn btn-default pull-right btn-sm okbtn" onClick={_self.okHandler.bind(this, index, _self.state.editdata[index])}>ok</button>
+            <input className="mytxt" onChange={_self.onChange} data-index={index} value={_self.state.editdata[index]} />
+            <button className="btn btn-default pull-right btn-sm okbtn" onClick={_self.okHandler} data-index={index} value={_self.state.editdata[index]} >ok</button>
           </div>
           <div className="display">
             <span className="input-group-addon fontsize">{itemText}</span>
-            <button className="btn btn-primary pull-right btn-sm removebtn" onClick={_self.deletedata.bind(this, index)}>remove</button><button className="btn btn-info pull-right btn-sm editbtn" onClick={_self.editHandler.bind(this, index)}>edit</button>
+            <button className="btn btn-primary pull-right btn-sm removebtn" onClick={_self.deletedata} data-index={index}>remove</button>
+            <button className="btn btn-info pull-right btn-sm editbtn" onClick={_self.editHandler.bind(this, index)} data-index={index}>edit</button>
           </div>  
         </li>       
       );
