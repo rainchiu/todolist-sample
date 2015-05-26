@@ -1,18 +1,45 @@
 var myDataRef;
 var App = React.createClass({
+  mixins: [ReactFireMixin],
   getInitialState: function() {
-    return {data: [], tmptext: ''};
+    return {data: [], tmptext: '', key: [], idx: ''};
   },
   componentWillMount: function(){
     myDataRef = new Firebase('https://rainchiu.firebaseio.com/');
     var _self = this;
-    myDataRef.on('child_added', function(snapshot) {
-      var message = snapshot.val();
-      _self.state.data.push(message.text);
-      _self.setState({data: _self.state.data});     
+     myDataRef.on('child_added', function(snapshot) {
+      _self.state.key.push(snapshot.key());
+      _self.state.data.push(snapshot.val().text);
+      _self.setState({data: _self.state.data,tmptext: ''});   
+      // console.log(_self.state.data);
     });
   },
   componentDidMount: function(){
+    var _self = this;
+    myDataRef.on('child_changed', function(snapshot) {
+      // console.log(_self.state.key);
+      for(var i=0;i<_self.state.key.length;i++){
+        if(_self.state.key[i]==snapshot.key()){
+          _self.state.idx = i;
+        }
+      }
+      _self.state.data.splice(_self.state.idx, 1 , snapshot.val().text);
+      _self.setState({data: _self.state.data, idx:''});
+      // console.log('sss');
+    });
+    myDataRef.on('child_removed', function(snapshot) {
+      // console.log(_self.state.idx);
+      for(var i=0;i<_self.state.key.length;i++){
+        if(_self.state.key[i]==snapshot.key()){
+          _self.state.idx = i;
+        }
+      }
+      _self.state.key.splice(_self.state.idx, 1);
+      _self.state.data.splice(_self.state.idx, 1);
+      _self.setState({data: _self.state.data});
+    });
+  },
+  componentWillUpdate: function(){
   },
   componentWillUnmount: function(){
     myDataRef.off();
@@ -21,26 +48,24 @@ var App = React.createClass({
     this.setState({tmptext: e.target.value});
   },
   addTodo: function(e) {
-    e.preventDefault();
     // this.state.data.push(this.state.tmptext);
+    // this.setState({data: this.state.data, tmptext: ''});
+    e.preventDefault();
     myDataRef.push({text: this.state.tmptext});
-    this.setState({data: this.state.data, tmptext: ''});
-    console.log(this.state.data);
   },
   removeTodo: function(index) {
-    this.state.data.splice(index, 1);
-    console.log(myDataRef.key());
-    myDataRef.remove();
-    this.setState({data: this.state.data});
-    this.firebasedata();
+    // this.state.data.splice(index, 1);
+    // this.setState({data: this.state.data}); 
+    this.state.idx = index;
+    myDataRef.child(this.state.key[index]).remove();
   },
   updateTodo: function(index, value) {
-    this.state.data.splice(index, 1, value);
-    this.setState({data: this.state.data});
-    this.firebasedata();
-  },
-  firebasedata: function(){ 
-    
+    // this.state.data.splice(index, 1, value);
+    // this.setState({data: this.state.data});
+    // this.state.idx = index;
+    // console.log(this.state.idx);
+    this.state.idx = index;
+    myDataRef.child(this.state.key[index]).update({text: value});
   },
   render: function() {
     return (
